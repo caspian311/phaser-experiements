@@ -42,7 +42,7 @@ function create() {
   player.setCollideWorldBounds(true);
 
   this.anims.create({
-    key: "walking-right",
+    key: "walking",
     frames: this.anims.generateFrameNumbers("superman-walking", {
       start: 0,
       end: 6
@@ -66,10 +66,15 @@ function create() {
 
 function update() {
   if (cursors.right.isDown) {
-    console.log("walking right");
     player.setVelocityX(160);
 
-    player.anims.play("walking-right", true);
+    player.anims.play("walking", true);
+    player.flipX = false;
+  } else if (cursors.left.isDown) {
+    player.setVelocityX(-160);
+
+    player.anims.play("walking", true);
+    player.flipX = true;
   } else {
     player.setVelocityX(0);
 
