@@ -18,6 +18,7 @@ var config = {
 
 var player;
 var cursors;
+var spaceBar;
 
 var game = new Phaser.Game(config);
 
@@ -29,6 +30,10 @@ function preload() {
   });
   this.load.spritesheet("superman-standing", "assets/eradicator-standing.png", {
     frameWidth: 72,
+    frameHeight: 84
+  });
+  this.load.spritesheet("superman-shooting", "assets/eradicator-shooting.png", {
+    frameWidth: 130,
     frameHeight: 84
   });
 }
@@ -61,7 +66,18 @@ function create() {
     repeat: -1
   });
 
+  this.anims.create({
+    key: "shooting",
+    frames: this.anims.generateFrameNumbers("superman-shooting", {
+      start: 0,
+      end: 9
+    }),
+    frameRate: 10,
+    repeat: -1
+  });
+
   cursors = this.input.keyboard.createCursorKeys();
+  spaceBar = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
 }
 
 function update() {
@@ -75,6 +91,10 @@ function update() {
 
     player.anims.play("walking", true);
     player.flipX = true;
+  } else if (spaceBar.isDown) {
+    player.setVelocityX(0);
+
+    player.anims.play("shooting", true);
   } else {
     player.setVelocityX(0);
 
